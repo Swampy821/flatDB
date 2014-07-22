@@ -62,7 +62,11 @@ db._saveDB = function() {
         console.log('You have write access turned off. You cannot modify this database');
         return false;
     }
-    if(fs.writeFileSync(this._dbPath, JSON.stringify(this._dbArray))){
+    var saveDB = JSON.stringify(this._dbArray);
+    if(saveDB === "{}") {
+        saveDB = "[]";
+    }
+    if(fs.writeFileSync(this._dbPath, saveDB)){
         console.log('Problem saving database');
         return false;
     }else{
@@ -117,7 +121,11 @@ db.insert = function(row) {
 db.remove = function(obj) {
     if(!this._DBObj()){return false;}
     var newArray = this.search(obj, this._dbArray, true);
+    if(JSON.stringify(newArray) === "{}") {
+        newArray = [];
+    }
     this._dbArray = newArray;
+    console.log(this._dbArray);
     this._saveDB();
     return true;
 };
