@@ -86,7 +86,7 @@ db.openDatabase = function(options) {
         this.options.dbName = options.dbName !== undefined ? options.dbName : this.options.dbName;
         this.options.writeAccess = options.writeAccess !== undefined ? options.writeAccess : this.options.writeAccess;
     }
-    this._dbPath = './' + db.options.dbName + '.json';
+    this._dbPath = __dirname + '/' + db.options.dbName + '.json';
     var createDB = !fs.existsSync(this._dbPath);
     if(createDB) {
         fs.writeFileSync(this._dbPath, '[]');
