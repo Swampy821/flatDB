@@ -4,7 +4,8 @@ db._dbArray;
 db._dbPath;
 db.options = {
     dbName: 'baseDB',
-    writeAccess:false
+    writeAccess:false,
+    localOnly:false
 };
 (function(){
     // Convert array to object
@@ -58,6 +59,7 @@ db.search = function(obj, optionalArray, notEqual) {
     return result;
 };
 db._saveDB = function() {
+    if(this.options.localOnly) { return; }
     if(!this.options.writeAccess) {
         console.log('You have write access turned off. You cannot modify this database');
         return false;
@@ -85,6 +87,11 @@ db.openDatabase = function(options) {
     if(options !== undefined) {
         this.options.dbName = options.dbName !== undefined ? options.dbName : this.options.dbName;
         this.options.writeAccess = options.writeAccess !== undefined ? options.writeAccess : this.options.writeAccess;
+        this.options.localOnly = options.localOnly !== undefined ? options.localOnly : this.options.localOnly;
+    }
+    if(this.options.localOnly) { 
+        this._dbArray = [];
+        return; 
     }
     this._dbPath = __dirname + '/' + db.options.dbName + '.json';
     var createDB = !fs.existsSync(this._dbPath);
@@ -125,7 +132,6 @@ db.remove = function(obj) {
         newArray = [];
     }
     this._dbArray = newArray;
-    console.log(this._dbArray);
     this._saveDB();
     return true;
 };

@@ -14,9 +14,9 @@ var db = require('./flatDB.js');
 
 #####Open/Create DB
 ```javascript
-db.openDatabase({dbName:'My_Database',writeAccess:true});
+db.openDatabase({dbName:'My_Database',writeAccess:true, localOnly:false});
 ```
-
+localOnly option allows for a database without a file. When the instance dies all data will die as well. This would only be recommended for caching.
 
 #####View Record By ID
 ```javascript
@@ -39,3 +39,6 @@ db.insert({"message":"Message I am inserting"});
 ```javascript
 db.remove({"message":"Message of the record I want to remove"});
 ```
+
+
+

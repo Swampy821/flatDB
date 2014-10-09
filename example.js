@@ -1,7 +1,11 @@
 var db = require('./flatDB');
 
 //Create Database
-db.openDatabase({dbName:'MyDB',writeAccess:true});
+db.openDatabase({
+	dbName:'MyDB',
+	writeAccess:true, 
+	localOnly:true
+});
 
 
 
